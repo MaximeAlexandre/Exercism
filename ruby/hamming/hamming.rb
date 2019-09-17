@@ -7,5 +7,3 @@ class Hamming
     }
   end
 end
-
-print Hamming.compute('GGACGGATTCTG', 'AGGACGGATTCT')
