@@ -24,3 +24,8 @@ class Transpose
     result.join("\n")
   end
 end
+
+if $PROGRAM_NAME == __FILE__
+  input = "HEART\nEMBER\nABUSE\nRESIN\nTREND"
+  puts Transpose.transpose(input)
+end
