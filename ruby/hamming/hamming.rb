@@ -31,5 +31,10 @@ class Hamming
 end
 
 if $PROGRAM_NAME == __FILE__
-  puts Hamming.compute('def', 'def')
+  require 'benchmark/ips'
+  strand1, strand2 = 'AGACGGATTCTG', 'AGGACGGATTCT'
+  Benchmark.ips do |x|
+    x.report('memoize') { @distance ||=  strand1.chars.zip(strand2.chars).count { |n1, n2| n1 != n2 } }
+    x.report('standard') { distance = strand1.chars.zip(strand2.chars).count { |n1, n2| n1 != n2 } }
+  end
 end
