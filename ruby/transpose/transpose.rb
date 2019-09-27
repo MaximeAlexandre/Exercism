@@ -1,31 +1,14 @@
 class Transpose
   def self.transpose(input)
-    result = []
-
     return "" if input == ""
-    
-    array_input = input.split("\n")
-    number_of_rows = array_input.length
-    number_of_columns = array_input.max_by { |row| row.length }.length
-    # array_input = input.split("\n").each { |row| row << " " until row.length == number_of_columns }
 
-    for j in 0...number_of_columns do
-      new_row = ""
-      for i in 0...number_of_rows do
-        if j > array_input[i].length - 1
-          new_row += " "
-        else
-          new_row += array_input[i][j]
-        end
-      end
-      result << new_row
-    end
+    array_input = input.split("\n").map(&:chars)
+    result = Array.new(array_input.map(&:length).max){ |i| array_input.map{ |e| e[i] } }
 
-    result.join("\n")
   end
 end
 
 if $PROGRAM_NAME == __FILE__
-  input = "HEART\nEMBER\nABUSE\nRESIN\nTREND"
-  puts Transpose.transpose(input)
+  input = "The longest line.\nA long line.\nA longer line.\nA line."
+  Transpose.transpose(input)
 end
