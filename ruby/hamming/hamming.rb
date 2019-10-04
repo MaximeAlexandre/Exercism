@@ -5,8 +5,7 @@ class Hamming
   attr_reader :strand1, :strand2
 
   def self.compute(strand1, strand2)
-    # new(strand1, strand2).distance
-    new(strand1, strand2).nucleotides
+    new(strand1, strand2).distance
   end
 
   def initialize(strand1, strand2)
