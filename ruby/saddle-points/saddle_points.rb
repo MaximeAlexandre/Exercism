@@ -11,29 +11,26 @@ class Matrix
   end
 
   def saddle_points
-    common_index.map { |element| [element, rows[element].index(row_max_value[element])] }
+    rows.map.with_index { |row, row_index|
+      row.map.with_index { |element, element_index|
+        [row_index, element_index] if valid_saddle_point?(element, row.max, columns[element_index].min)
+      }.compact
+    }.flatten(1)
   end
 
   private
 
-  def row_max_value
-    rows.map { |row| row.max }
-  end
-
-  def index_row_max_value
-    rows.map { |row| row.index(row.max) }
-  end
-
-  def column_min_value
-    index_row_max_value.map { |e| columns[e].min }
-  end
-
-  def common_index
-    row_max_value.map.with_index { |x, y| y if x == column_min_value[y] }.compact
+  def valid_saddle_point?(point, row_max, column_min)
+    point == row_max && point == column_min
   end
 end
 
+# test part
 if $PROGRAM_NAME == __FILE__
+  # test with all points are saddle points because of the given definition
+  # matrix = Matrix.new("5 5 5\n5 5 5\n5 5 5")
+
+  #test from saddle_points_test.rb
   matrix = Matrix.new("4 5 4\n3 5 5\n1 5 4")
   print matrix.saddle_points
 end
