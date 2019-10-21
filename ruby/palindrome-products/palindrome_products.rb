@@ -1,15 +1,14 @@
 class Palindromes
-  attr_reader :max_factor, :min_factor, :range, :products_list
+  attr_reader :max_factor, :min_factor, :range
 
   def initialize(factor)
-    @max_factor = factor[:max_factor]
-    @min_factor = min_factor_value(factor[:min_factor])
+    @max_factor = factor.fetch(:max_factor, 1)
+    @min_factor = factor.fetch(:min_factor, 1)
     @range = [*min_factor..max_factor]
-    @products_list = []
   end
 
   def generate
-    list
+    range.map { |x| range.map { |y| x * y } }.flatten.uniq
   end
 
   def largest
@@ -20,30 +19,10 @@ class Palindromes
     palindrome_list.min
   end
 
-  def factors
-    
-  end
-
   private
 
-  def min_factor_value(min_factor)
-    if min_factor.nil?
-      1
-    else
-      min_factor
-    end
-  end
-
-  def list
-    range.each.with_index { |x, i|
-      range.each { |y| products_list << x * y unless products_list.include?(x * y)
-      }
-    }
-    products_list
-  end
-
   def palindrome_list
-    list.map { |element|
+    generate.map { |element|
       element if element.to_s == element.to_s.reverse
     }.compact
   end
@@ -54,6 +33,7 @@ if $PROGRAM_NAME == __FILE__
   palindromes = Palindromes.new(max_factor: 9)
   # palindromes = Palindromes.new(max_factor: 99, min_factor: 10)
   # print palindromes.generate
-  largest = palindromes.largest
-  # print largest.factors
+  print largest = palindromes.largest
+  print largest = palindromes.smallest
+  # print largest.value
 end
