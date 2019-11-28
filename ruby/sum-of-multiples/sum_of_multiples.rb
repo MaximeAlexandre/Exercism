@@ -11,11 +11,7 @@ class SumOfMultiples
 
     all_natural_numbers.each { |natural_number|
       multiple_numbers.each { |multiple|
-        if multiple == 0
-          arr_sum_of_multiples << multiple
-        elsif natural_number % multiple == 0
-          arr_sum_of_multiples << natural_number
-        end
+        arr_sum_of_multiples << natural_number if natural_number % multiple == 0
       }
     }
     arr_sum_of_multiples.uniq.sum

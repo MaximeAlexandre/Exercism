@@ -1,28 +1,30 @@
 class Phrase
-  attr_reader :sentence, :word_number
+  REGEX = /\b[\w']+\b/
+
+  attr_reader :sentence
 
   def initialize(sentence)
     @sentence = sentence
-    @word_number = Hash.new
   end
 
   def word_count
-    sentence.downcase.scan(/[[:alnum:]]+(?:'[[:alnum:]]+)*/) { |word|
-      if word_number.has_key?(word)
-        word_number[word] = word_number[word] + 1
-      else
-        word_number[word] = 1
-      end
-    }
-    word_number
+    input_preparation.each_with_object(Hash.new(0)) do |word, word_number|
+      word_number[word] += 1
+    end
+  end
+
+  private
+
+  def input_preparation
+    sentence.downcase.scan(REGEX)
   end
 end
 
 =begin
-Explication of the regexp
-/
-[[:alnum:]]+        # match a word or number
-(?:'[[:alnum:]]+)   # match an apostrophe followed by a letter, word, digit or number
-*                   # repeat the code 0 or more times 
-/
+Explanation of the regexp
+/       
+\b      word boundaries
+[\w']+  any word with, or without, an apostrophe followed by a letter or word
+\b      word boundaries
+/       
 =end

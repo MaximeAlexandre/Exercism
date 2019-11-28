@@ -23,19 +23,18 @@ class ResistorColorTrio
     "Resistor value: #{sum_of_values}"
   end
 
-  def two_first_value
-    color_coded_band[0..1].map {|color|
-      raise ArgumentError.new() if ENCODED_BAND_COLOR.include?(color) == false
+  def color_decoded_band
+    color_coded_band.map {|color|
+      raise ArgumentError.new("error") if ENCODED_BAND_COLOR.include?(color) == false
 
-      ENCODED_BAND_COLOR.index(color)}.join.to_i
-  end
-
-  def third_value
-    10 ** ENCODED_BAND_COLOR.index(color_coded_band[2])
+      ENCODED_BAND_COLOR.index(color)}.join
   end
 
   def sum_of_values
-    sum = two_first_value * third_value
+    two_first_color_value = color_decoded_band[0..1].to_i
+    third_color_value = 10 ** color_decoded_band[2].to_i
+    sum = two_first_color_value * third_color_value
+    
     if sum.digits.count > 3
       "#{sum.to_s.slice(0..-4)} kiloohms"
     else
@@ -43,5 +42,3 @@ class ResistorColorTrio
     end
   end
 end
-
-puts ResistorColorTrio.new(["yellow", "black", "purple"]).label
