@@ -15,13 +15,13 @@ class Palindromes
 
   def largest
     value = palindrome_list.max
-    factors = palindrome_list.delete_if { |digit| value % digit != 0 }
+    factors = factors_list(value)
     Result.new(value, factors)
   end
 
   def smallest
     value = palindrome_list.min
-    factors = palindrome_list.delete_if { |digit| value % digit != 0 }
+    factors = factors_list(value)
     Result.new(value, factors)
   end
 
@@ -31,6 +31,10 @@ class Palindromes
     generate.map { |element|
       element if element.to_s == element.to_s.reverse
     }.compact
+  end
+
+  def factors_list(value)
+    palindrome_list.delete_if { |digit| value % digit != 0 }
   end
 end
 

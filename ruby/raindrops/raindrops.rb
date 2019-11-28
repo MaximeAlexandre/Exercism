@@ -34,5 +34,5 @@ end
 
 # test part
 if $PROGRAM_NAME == __FILE__
-  print Raindrops.convert(34)
+  print Raindrops.convert(210)
 end
