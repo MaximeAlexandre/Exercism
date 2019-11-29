@@ -28,22 +28,29 @@ class Palindromes
   private
 
   def palindrome_list
-    generate.map { |element|
-      element if element.to_s == element.to_s.reverse
-    }.compact
+    # generate.map { |element|
+    #   element if element.to_s == element.to_s.reverse
+    # }.compact
+    generate.delete_if { |number| number.to_s != number.to_s.reverse }
   end
 
   def factors_list(value)
-    palindrome_list.delete_if { |digit| value % digit != 0 }
+    factors_result = Array.new
+    
+    range.each { |digit|
+      factors_result << [digit, value / digit].sort if value % digit == 0 && range.include?(value / digit)
+    }
+    factors_result.uniq
   end
 end
 
-
+# test part :
 if $PROGRAM_NAME == __FILE__
-  palindromes = Palindromes.new(max_factor: 9)
+  # palindromes = Palindromes.new(max_factor: 9)
   # palindromes = Palindromes.new(max_factor: 99, min_factor: 10)
+  palindromes = Palindromes.new(max_factor: 999, min_factor: 100)
   # print palindromes.generate
   largest = palindromes.largest
-  # print largest = palindromes.smallest
+  puts largest.value
   print largest.factors
 end
