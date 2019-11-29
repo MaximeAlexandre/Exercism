@@ -28,9 +28,6 @@ class Palindromes
   private
 
   def palindrome_list
-    # generate.map { |element|
-    #   element if element.to_s == element.to_s.reverse
-    # }.compact
     generate.delete_if { |number| number.to_s != number.to_s.reverse }
   end
 
